@@ -125,6 +125,12 @@ def GenerateReport(args):
     logging.info("ZAP Scan report generation been finished!")
     logging.info("==================================================")
 
+def StopZAP(args):
+    logging.info("ZAP tool shutting down started!")
+    time.sleep(5)
+    logging.info("ZAP tool shutting down finished!")
+    logging.info("==================================================")
+
 def main():
     logging.basicConfig(level=logging.INFO)
     startzap = sdk.Job("Start ZAP", "Starting ZAP", StartZAP)
@@ -132,4 +138,5 @@ def main():
     runwalkthrough = sdk.Job("Run Walkthrough", "Starting Walkthrough", RunWalkthrough,["Start Proxy"])
     runscan = sdk.Job("Run Scan", "Starting ZAP Scan", RunScan,["Run Walkthrough"])
     generatereport = sdk.Job("Generate Report", "GenerateReporting ZAP Scan Report", RunScan,["Run Scan"])
+    stopzap = sdk.Job("Stop ZAP", "Stopping ZAP", RunScan,["Generate Report"])
     sdk.serve([startzap, startproxy, runwalkthrough, runscan, generatereport])
