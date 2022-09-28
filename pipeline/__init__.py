@@ -20,7 +20,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class OwaspZAP(object):
     def __init__(self, proxy_host='localhost', proxy_port='8090'):
-        print('in class')
+        logging.info('in class')
         self.proxy_host = proxy_host
         self.proxy_port = proxy_port
         self.zap = ZAP(proxies={
@@ -31,11 +31,11 @@ class OwaspZAP(object):
     def start_headless_zap(self, zap_path, proxy_port):
         try:
             cmd = "{0}/zap.sh -daemon -config api.disablekey=true -port {1}".format(zap_path, proxy_port)
-            print(cmd)
+            logging.info(cmd)
             subprocess.Popen(cmd.split(" "), stdout=open(os.devnull, "w"))
             time.sleep(10)
         except IOError:
-            print("ZAP Path is not configured correctly")
+            logging.info("ZAP Path is not configured correctly")
 
     def zap_open_url(self, url):
         self.zap.urlopen(url)
@@ -55,14 +55,14 @@ class OwaspZAP(object):
             time.sleep(2)
             return spider_id
         except Exception as e:
-            print((e.message))
+            logging.info((e.message))
 
     def zap_spider_status(self, spider_id):
         while int(self.zap.spider.status(spider_id)) < 100:
             print("Spider running at {0}%".format(int(self.zap.spider.status(spider_id))))
             time.sleep(10)
-        print("Spider Completed!")
-        print(self.zap.core.urls())
+        logging.info("Spider Completed!")
+        logging.info(self.zap.core.urls())
 
     def zap_start_ascan(self, context, url, policy="Default Policy"):
         try:
@@ -70,32 +70,32 @@ class OwaspZAP(object):
             time.sleep(2)
             return scan_id
         except Exception as e:
-            print(e.message)
+            logging.info(e.message)
 
     def zap_scan_status(self, scan_id):
         while int(self.zap.ascan.status(scan_id)) < 100:
             print("Scan running at {0}%".format(int(self.zap.ascan.status(scan_id))))
             time.sleep(10)
-        print('Active Scan Complete!')
-        print(self.zap.core.alerts())
+        logging.info('Active Scan Complete!')
+        logging.info(self.zap.core.alerts())
 
     def zap_export_html_report(self, export_file):
         f1 = open('{0}'.format(export_file), 'w+')
         f1.write(self.zap.core.htmlreport())
         f1.close()
-        print("HTML REPORT GENERATED")
+        logging.info("HTML REPORT GENERATED")
     
     def zap_export_xml_report(self, export_file):
         f1 = open('{0}'.format(export_file), 'w+')
         f1.write(self.zap.core.xmlreport())
         f1.close()
-        print("XML REPORT GENERATED")
+        logging.info("XML REPORT GENERATED")
         
     def zap_export_json_report(self, export_file):
         f1 = open('{0}'.format(export_file), 'w+')
         f1.write(self.zap.core.jsonreport())
         f1.close()
-        print("JSON REPORT GENERATED")
+        logging.info("JSON REPORT GENERATED")
 
     def zap_shutdown(self):
         self.zap.core.shutdown()
