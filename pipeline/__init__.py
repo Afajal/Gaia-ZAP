@@ -101,162 +101,161 @@ class OwaspZAP(object):
         self.zap.core.shutdown()
 
 class CTF2_walkthrough(object):
-	def __init__(self, proxy_host = 'localhost', proxy_port = '8090',target= os.environ.get('TARGET_URL','http://134.209.146.136')):
-		self.proxy_host = proxy_host
-		self.proxy_port = proxy_port
-		self.target = target
-	def run_script(self):
-		options = Options()
-		options.headless = True
-		profile = webdriver.FirefoxProfile()
-		profile.set_preference("network.proxy.type", 1)
-		profile.set_preference("network.proxy.http", 'localhost')
-		profile.set_preference("network.proxy.http_port", 8090)
-		profile.set_preference("network.proxy.ssl", 'localhost')
-		profile.set_preference("network.proxy.ssl_port", 8090)
-		profile.accept_untrusted_certs = True
-		profile.DEFAULT_PREFERENCES["frozen"]["marionette.contentListener"] = True
-		profile.DEFAULT_PREFERENCES["frozen"]["network.stricttransportsecurity.preloadlist"] = True
-		profile.DEFAULT_PREFERENCES["frozen"]["security.cert_pinning.enforcement_level"] = True
-		profile.set_preference('webdriver_assume_untrusted_issuer',False)
-		desired_capabilities = DesiredCapabilities.FIREFOX.copy()
-		desired_capabilities['acceptInsecureCerts'] = True
-		profile.set_preference("network.proxy.no_proxies_on", "*.googleapis.com,*.google.com,*.gstatic.com,*.googleapis.com,*.mozilla.net,*.mozilla.com,ocsp.pki.goog")
-		driver = webdriver.Firefox(firefox_profile=profile,firefox_options=options,capabilities=desired_capabilities)	
-		logging.info("[+] Initialized firefox driver")
-		driver.maximize_window()
-		driver.implicitly_wait(10)
-		logging.info("[+] ================ Implicit Wait is Set =================")
-		driver.get('{0}'.format(target))
-        	logging.info('[+] ' + driver.current_url)
-        	driver.implicitly_wait(5)
-        	# Clicks on 'About'
-		try:
-		    driver.get('{0}/about'.format(target))
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/appointment/add'.format(target))
-		    logging.info('[+] ' + driver.current_url)
-		    driver.implicitly_wait(5)
-		    time.sleep(10)
-		    # Name
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[1]/div[1]/div/div/input').clear()
-		    driver.implicitly_wait(5)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[1]/div[1]/div/div/input').send_keys('selenium test')
-		    driver.implicitly_wait(5)
-		    # Phone number
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[2]/div[1]/div/div/input').clear()
-		    driver.implicitly_wait(5)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[2]/div[1]/div/div/input').send_keys('0011223344')
-		    driver.implicitly_wait(5)
-		    # Gender
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[3]/div[1]/div/div/select').click()
-		    driver.implicitly_wait(5)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[3]/div[1]/div/div/select/option[2]').click()
-		    driver.implicitly_wait(5)
-		    # Health Plan
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[4]/div[1]/div/div/select').click()
-		    driver.implicitly_wait(5)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[4]/div[1]/div/div/select/option[3]').click()
-		    driver.implicitly_wait(5)
-		    # Select Health Plan
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[4]/div[1]/div/div/select').click()
-		    driver.implicitly_wait(10)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[4]/div[1]/div/div/select/option[2]').click()
-		    driver.implicitly_wait(7)
-		    # Appointment reason
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[6]/div[1]/div/div/textarea').clear()
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[6]/div[1]/div/div/textarea').send_keys('Selenium Test')
-		    # Email
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[1]/div[2]/div/div/input').clear()
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[1]/div[2]/div/div/input').send_keys('selenium@test.com')
-		    driver.implicitly_wait(5)
-		    # Date of Birth
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[2]/div[2]/div/div/input').clear()
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[2]/div[2]/div/div/input').send_keys('1989-01-04')
-		    driver.implicitly_wait(5)
-		    # Address
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[3]/div[2]/div/div/textarea').clear()
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[3]/div[2]/div/div/textarea').send_keys('Selenium Test')
-		    driver.implicitly_wait(5)
-		    # Appointment Date
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[5]/div[2]/div/div/input').clear()
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[5]/div[2]/div/div/input').send_keys('2021/01/04')
-		    driver.implicitly_wait(5)
-		    # Submit
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[7]/div/div/input').click()
-		    driver.implicitly_wait(5)
-		    time.sleep(10)
-		    driver.get('{0}/contact_us/'.format(target))
-		    logging.info( '[+] ' + driver.current_url)
-		    time.sleep(10)
-		except BaseException as e:
-		    pass
-
-		try:
-		    driver.get('{0}/login/'.format(target))
-		    logging.info('[+] ' + driver.current_url)
-		    time.sleep(10)
-		    driver.find_element_by_xpath('/html/body/div/div/section/form/div[1]/input').clear()
-		    driver.find_element_by_xpath('/html/body/div/div/section/form/div[1]/input').send_keys('bruce.banner@we45.com')
-		    driver.find_element_by_xpath('/html/body/div/div/section/form/div[2]/input').clear()
-		    driver.find_element_by_xpath('/html/body/div/div/section/form/div[2]/input').send_keys('secdevops')
-		    driver.find_element_by_xpath('/html/body/div/div/section/form/div[3]/button').click()
-		    time.sleep(10)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.implicitly_wait(10)
-		    time.sleep(10)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.implicitly_wait(10)
-		    time.sleep(10)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/technicians/'.format(target))
-		    time.sleep(10)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/appointment/plan'.format(target))
-		    time.sleep(10)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/appointment/doctor'.format(target))
-		    time.sleep(10)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/secure_tests/'.format(target))
-		    time.sleep(10)
-		    # Sends keys and clicks on 'Search'
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[1]').clear()
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[1]').send_keys('selenium test')
-		    driver.implicitly_wait(5)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[2]').click()
-		    driver.implicitly_wait(5)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/tests/'.format(target))
-		    time.sleep(10)
-		    # Sends keys and clicks on 'Search'
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[1]').clear()
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[1]').send_keys('selenium test')
-		    driver.implicitly_wait(5)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[2]').click()
-		    driver.implicitly_wait(5)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/plans/'.format(target))
-		    time.sleep(10)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/password_change'.format(target))
-		    time.sleep(10)
-		    driver.implicitly_wait(5)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[1]/div[2]/div/div/input').send_keys('secdevops')
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[2]/div[2]/div/div/input').send_keys('secdevops')
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[3]/button').click()
-		    driver.implicitly_wait(5)
-		    logging.info('[+] ' + driver.current_url)
-		    driver.get('{0}/password_change_secure'.format(target))
-		    time.sleep(10)
-		    driver.implicitly_wait(5)
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[1]/div[2]/div/div/input').send_keys('secdevops')
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[2]/div[2]/div/div/input').send_keys('secdevops')
-		    driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[3]/button').click()
-		    driver.implicitly_wait(5)
-		    logging.info('[+] ' + driver.current_url)
-		except BaseException as e:
-		    logging.info(e)
+    def __init__(self, proxy_host = 'localhost', proxy_port = '8090',target= os.environ.get('TARGET_URL','http://134.209.146.136')):
+        self.proxy_host = proxy_host
+        self.proxy_port = proxy_port
+        self.target = target
+    def run_script(self):
+        options = Options()
+        options.headless = True
+        profile = webdriver.FirefoxProfile()
+        profile.set_preference("network.proxy.type", 1)
+        profile.set_preference("network.proxy.http", 'localhost')
+        profile.set_preference("network.proxy.http_port", 8090)
+        profile.set_preference("network.proxy.ssl", 'localhost')
+        profile.set_preference("network.proxy.ssl_port", 8090)
+        profile.accept_untrusted_certs = True
+        profile.DEFAULT_PREFERENCES["frozen"]["marionette.contentListener"] = True
+        profile.DEFAULT_PREFERENCES["frozen"]["network.stricttransportsecurity.preloadlist"] = True
+        profile.DEFAULT_PREFERENCES["frozen"]["security.cert_pinning.enforcement_level"] = True
+        profile.set_preference('webdriver_assume_untrusted_issuer',False)
+        desired_capabilities = DesiredCapabilities.FIREFOX.copy()
+        desired_capabilities['acceptInsecureCerts'] = True
+        profile.set_preference("network.proxy.no_proxies_on", "*.googleapis.com,*.google.com,*.gstatic.com,*.googleapis.com,*.mozilla.net,*.mozilla.com,ocsp.pki.goog")
+        driver = webdriver.Firefox(firefox_profile=profile,firefox_options=options,capabilities=desired_capabilities)     
+        logging.info("[+] Initialized firefox driver")
+        driver.maximize_window()
+        driver.implicitly_wait(10)
+        logging.info("[+] ================ Implicit Wait is Set =================")
+        driver.get('{0}'.format(target))
+        logging.info('[+] ' + driver.current_url)
+        driver.implicitly_wait(5)
+        # Clicks on 'About'
+        try:
+            driver.get('{0}/about'.format(target))
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/appointment/add'.format(target))
+            logging.info('[+] ' + driver.current_url)
+            driver.implicitly_wait(5)
+            time.sleep(10)
+            # Name
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[1]/div[1]/div/div/input').clear()
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[1]/div[1]/div/div/input').send_keys('selenium test')
+            driver.implicitly_wait(5)
+            # Phone number
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[2]/div[1]/div/div/input').clear()
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[2]/div[1]/div/div/input').send_keys('0011223344')
+            driver.implicitly_wait(5)
+            # Gender
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[3]/div[1]/div/div/select').click()
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[3]/div[1]/div/div/select/option[2]').click()
+            driver.implicitly_wait(5)
+            # Health Plan
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[4]/div[1]/div/div/select').click()
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[4]/div[1]/div/div/select/option[3]').click()
+            driver.implicitly_wait(5)
+            # Select Health Plan
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[4]/div[1]/div/div/select').click()
+            driver.implicitly_wait(10)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[4]/div[1]/div/div/select/option[2]').click()
+            driver.implicitly_wait(7)
+            # Appointment reason
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[6]/div[1]/div/div/textarea').clear()
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[6]/div[1]/div/div/textarea').send_keys('Selenium Test')
+            # Email
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[1]/div[2]/div/div/input').clear()
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[1]/div[2]/div/div/input').send_keys('selenium@test.com')
+            driver.implicitly_wait(5)
+            # Date of Birth
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[2]/div[2]/div/div/input').clear()
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[2]/div[2]/div/div/input').send_keys('1989-01-04')
+            driver.implicitly_wait(5)
+            # Address
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[3]/div[2]/div/div/textarea').clear()
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[3]/div[2]/div/div/textarea').send_keys('Selenium Test')
+            driver.implicitly_wait(5)
+            # Appointment Date
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[5]/div[2]/div/div/input').clear()
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[5]/div[2]/div/div/input').send_keys('2021/01/04')
+            driver.implicitly_wait(5)
+            # Submit
+            driver.find_element_by_xpath('/html/body/div[2]/div/div/form/div[7]/div/div/input').click()
+            driver.implicitly_wait(5)
+            time.sleep(10)
+            driver.get('{0}/contact_us/'.format(target))
+            logging.info( '[+] ' + driver.current_url)
+            time.sleep(10)
+        except BaseException as e:
+            pass
+        try:
+            driver.get('{0}/login/'.format(target))
+            logging.info('[+] ' + driver.current_url)
+            time.sleep(10)
+            driver.find_element_by_xpath('/html/body/div/div/section/form/div[1]/input').clear()
+            driver.find_element_by_xpath('/html/body/div/div/section/form/div[1]/input').send_keys('bruce.banner@we45.com')
+            driver.find_element_by_xpath('/html/body/div/div/section/form/div[2]/input').clear()
+            driver.find_element_by_xpath('/html/body/div/div/section/form/div[2]/input').send_keys('secdevops')
+            driver.find_element_by_xpath('/html/body/div/div/section/form/div[3]/button').click()
+            time.sleep(10)
+            logging.info('[+] ' + driver.current_url)
+            driver.implicitly_wait(10)
+            time.sleep(10)
+            logging.info('[+] ' + driver.current_url)
+            driver.implicitly_wait(10)
+            time.sleep(10)
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/technicians/'.format(target))
+            time.sleep(10)
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/appointment/plan'.format(target))
+            time.sleep(10)
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/appointment/doctor'.format(target))
+            time.sleep(10)
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/secure_tests/'.format(target))
+            time.sleep(10)
+            # Sends keys and clicks on 'Search'
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[1]').clear()
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[1]').send_keys('selenium test')
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[2]').click()
+            driver.implicitly_wait(5)
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/tests/'.format(target))
+            time.sleep(10)
+            # Sends keys and clicks on 'Search'
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[1]').clear()
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[1]').send_keys('selenium test')
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/form/div/input[2]').click()
+            driver.implicitly_wait(5)
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/plans/'.format(target))
+            time.sleep(10)
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/password_change'.format(target))
+            time.sleep(10)
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[1]/div[2]/div/div/input').send_keys('secdevops')
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[2]/div[2]/div/div/input').send_keys('secdevops')
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[3]/button').click()
+            driver.implicitly_wait(5)
+            logging.info('[+] ' + driver.current_url)
+            driver.get('{0}/password_change_secure'.format(target))
+            time.sleep(10)
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[1]/div[2]/div/div/input').send_keys('secdevops')
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[2]/div[2]/div/div/input').send_keys('secdevops')
+            driver.find_element_by_xpath('/html/body/div[2]/div/div[3]/div/div[2]/form/div[3]/button').click()
+            driver.implicitly_wait(5)
+            logging.info('[+] ' + driver.current_url)
+        except BaseException as e:
+            logging.info(e)
         
 proxy_host = os.environ.get('ZAP_IP','localhost')
 proxy_port = os.environ.get('ZAP_PORT',8090)
