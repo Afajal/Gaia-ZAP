@@ -139,4 +139,4 @@ def main():
     runscan = sdk.Job("Run Scan", "Starting ZAP Scan", RunScan,["Run Walkthrough"])
     generatereport = sdk.Job("Generate Report", "GenerateReporting ZAP Scan Report", RunScan,["Run Scan"])
     stopzap = sdk.Job("Stop ZAP", "Stopping ZAP", RunScan,["Generate Report"])
-    sdk.serve([startzap, startproxy, runwalkthrough, runscan, generatereport])
+    sdk.serve([startzap, startproxy, runwalkthrough, runscan, generatereport, stopzap])
