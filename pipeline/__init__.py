@@ -123,12 +123,12 @@ class CTF2_walkthrough(object):
 		desired_capabilities['acceptInsecureCerts'] = True
 		profile.set_preference("network.proxy.no_proxies_on", "*.googleapis.com,*.google.com,*.gstatic.com,*.googleapis.com,*.mozilla.net,*.mozilla.com,ocsp.pki.goog")
 		driver = webdriver.Firefox(firefox_profile=profile,firefox_options=options,capabilities=desired_capabilities)	
-		print("[+] Initialized firefox driver")
+		logging.info("[+] Initialized firefox driver")
 		driver.maximize_window()
 		driver.implicitly_wait(10)
-		print("[+] ================ Implicit Wait is Set =================")
+		logging.info("[+] ================ Implicit Wait is Set =================")
 		driver.get('{0}'.format(target))
-        	print('[+] ' + driver.current_url)
+        	logging.info('[+] ' + driver.current_url)
         	driver.implicitly_wait(5)
         	# Clicks on 'About'
 		try:
