@@ -10,6 +10,13 @@ from gaiasdk import sdk
 import logging
 import os
 import git
+from selenium import webdriver
+from selenium.webdriver.common.proxy import *
+import sys
+from selenium.webdriver.common.keys import Keys
+import time
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class OwaspZAP(object):
     def __init__(self, proxy_host='localhost', proxy_port='8090'):
