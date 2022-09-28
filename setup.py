@@ -8,5 +8,8 @@ setup(name='testpipeline',
       install_requires=[
             'gaiasdk>=0.0.16',
             'GitPython==3.1.27',
-            'python-owasp-zap-v2.4==0.0.14'
+            'python-owasp-zap-v2.4==0.0.14',
+            'selenium==3.14',
+            'requests',
+            'selenium-requests==1.3'
       ])
