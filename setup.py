@@ -7,8 +7,6 @@ setup(name='testpipeline',
       author_email='pipelineauthor@mail.com',
       install_requires=[
             'gaiasdk>=0.0.16',
-            'bandit==1.7.4',
-            'safety==2.2.0',
-            'pyraider==1.0.20',
-            'GitPython==3.1.27'
+            'GitPython==3.1.27',
+            'python-owasp-zap-v2.4==0.0.14'
       ])
