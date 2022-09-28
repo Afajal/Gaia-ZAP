@@ -93,8 +93,6 @@ class OwaspZAP(object):
     def zap_shutdown(self):
         self.zap.core.shutdown()
         
-
-
 def StartZAP(args):
     logging.info("ZAP tool initialization started!")
     time.sleep(5)
