@@ -59,7 +59,7 @@ class OwaspZAP(object):
 
     def zap_spider_status(self, spider_id):
         while int(self.zap.spider.status(spider_id)) < 100:
-            print("Spider running at {0}%".format(int(self.zap.spider.status(spider_id))))
+            logging.info("Spider running at {0}%".format(int(self.zap.spider.status(spider_id))))
             time.sleep(10)
         logging.info("Spider Completed!")
         logging.info(self.zap.core.urls())
@@ -74,7 +74,7 @@ class OwaspZAP(object):
 
     def zap_scan_status(self, scan_id):
         while int(self.zap.ascan.status(scan_id)) < 100:
-            print("Scan running at {0}%".format(int(self.zap.ascan.status(scan_id))))
+            logging.info("Scan running at {0}%".format(int(self.zap.ascan.status(scan_id))))
             time.sleep(10)
         logging.info('Active Scan Complete!')
         logging.info(self.zap.core.alerts())
