@@ -99,6 +99,7 @@ def StartZAP(args):
     logging.info("ZAP tool initialization started!")
     time.sleep(5)
     logging.info("ZAP tool initialization finished!")
+    logging.info("==================================================")
     
 def StartProxy(args):
     logging.info("ZAP Proxy has been started!")
