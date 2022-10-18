@@ -127,6 +127,7 @@ class CTF2_walkthrough(object):
         driver.maximize_window()
         driver.implicitly_wait(10)
         logging.info("[+] ================ Implicit Wait is Set =================")
+        target = "http://134.209.146.136"
         driver.get('{0}'.format(target))
         logging.info('[+] ' + driver.current_url)
         driver.implicitly_wait(5)
