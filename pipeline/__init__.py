@@ -268,6 +268,7 @@ owasp_zap = OwaspZAP(proxy_host=proxy_host, proxy_port=proxy_port)
 def StartZAP(args):
     logging.info("ZAP tool initialization started!")
     owasp_zap.start_headless_zap(zap_path='/app/ZAP_2.7.0', proxy_port=proxy_port)
+    os.environ["JVM_ARGS"] = "-Dnashorn.args=--no-deprecation-warning"
     time.sleep(20)
     owasp_zap.zap_open_url(url=target_site)
     context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
