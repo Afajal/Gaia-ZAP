@@ -274,12 +274,6 @@ def StartZAP(args):
     logging.info("ZAP tool initialization finished!")
     logging.info("==================================================")
     
-def StartProxy(args):
-    logging.info("ZAP Proxy has been started!")
-    time.sleep(10)
-    logging.info("ZAP Proxy has been finished!")
-    logging.info("==================================================")
-
 def RunWalkthrough(args):
     logging.info("Walkthrough of Application has been started!")
     CTF2_walkthrough(proxy_host=proxy_host, proxy_port=proxy_port, target=target_site).run_script()
@@ -320,8 +314,7 @@ def StopZAP(args):
 def main():
     logging.basicConfig(level=logging.INFO)
     startzap = sdk.Job("Start ZAP", "Starting ZAP", StartZAP)
-    startproxy = sdk.Job("Start Proxy", "Starting Proxy", StartProxy,["Start ZAP"])
-    runwalkthrough = sdk.Job("Run Walkthrough", "Starting Walkthrough", RunWalkthrough,["Start Proxy"])
+    runwalkthrough = sdk.Job("Run Walkthrough", "Starting Walkthrough", RunWalkthrough,["Start ZAP"])
     runspiderscan = sdk.Job("Run Spider Scan", "Starting ZAP Spider Scan", RunSpiderScan,["Run Walkthrough"])
     runactivescan = sdk.Job("Run Active Scan", "Starting ZAP Active Scan", RunActiveScan,["Run Spider Scan"])
     generatereport = sdk.Job("Generate Report", "Generate ZAP Scan Report", GenerateReport,["Run Acitve Scan"])
