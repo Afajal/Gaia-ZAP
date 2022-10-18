@@ -292,6 +292,7 @@ def RunSpiderScan(args):
 
 def RunActiveScan(args):
     logging.info("ZAP Scan has been started!")
+    logging.info(context_id_list[0])
     scan_id = owasp_zap.zap_start_ascan(context=context_id_list[0], url=target_site)
     owasp_zap.zap_scan_status(scan_id=scan_id)
     time.sleep(5)
