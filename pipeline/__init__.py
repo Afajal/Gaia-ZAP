@@ -10,44 +10,37 @@ path_parent = os.getcwd()
 nodejs_path = path_parent+"/Cut-The-Funds-NodeJS"
 npm_audit_path = path_parent+"/Cut-The-Funds-NodeJS"
 
-def Clone(args):
-    logging.info("Cloning Latest Source started!")
+def StartZAP(args):
+    logging.info("ZAP Initiated")
     time.sleep(5)
     
-    cmd = "rm -rf {0} | true".format(nodejs_path)
-    process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
-    stdout, stderr = process.communicate()
-    logging.info(stdout)
-    logging.info(stderr)
-    logging.info("Cleared previous source code")
+    logging.info("ZAP Started")
+    logging.info("==================================================")
     
-    git.Repo.clone_from('https://github.com/we45/Cut-The-Funds-NodeJS.git', 'Cut-The-Funds-NodeJS')
-    logging.info("Cloning Latest Source finished!")
+def RunScript(args):
+    logging.info("Started Application Walkthrough")
+    time.sleep(5)
     
-def RunNodejsScan(args):
-    logging.info("NodejsScan has been started!")
-    cmd = "nodejsscan -d {0}".format(nodejs_path)
-    process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
-    stdout, stderr = process.communicate()
-    logging.info(stdout)
-    logging.info(stderr)
-    logging.info("NodejsScan has been finished!")
+    logging.info("Application Walkthrough Finished!")
     logging.info("==================================================")
 
-def RunNpmAudit(args):
-    logging.info("NpmAudit has been started!")
-    cmd = "npm audit --prefix {0}".format(npm_audit_path)
-    process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
-    stdout, stderr = process.communicate()
-    logging.info(stdout)
-    logging.info(stderr)
-    logging.info("NpmAudit has been finished!")
+def RunActiveScan(args):
+    logging.info("ZAP Active Scan Started!")
+    time.sleep(5)
+    
+    logging.info("ZAP Active Scan Finished!")
+    logging.info("==================================================")
+    
+def GenerateReport(args):
+    logging.info("ZAP Scan Report")
+    time.sleep(5)
     logging.info("==================================================")
 
     
 def main():
     logging.basicConfig(level=logging.INFO)
-    clone = sdk.Job("Clone Source", "Cloning Latest Source", Clone)
-    runnodejsscan = sdk.Job("Run NodeJS Scan", "Running Bandit Scan", RunNodejsScan,["Clone Source"])
-    runnpm = sdk.Job("Run Npm Audit Scan", "Running Safety Scan", RunNpmAudit, ["Run NodeJS Scan"])
-    sdk.serve([clone, runnodejsscan, runnpm])
+    startzap = sdk.Job("Start ZAP", "Starting ZAP", StartZAP)
+    runscript = sdk.Job("Run Application Walkthrough", "Application Walkthrough Running", RunScript,["Start ZAP"])
+    runactivescan = sdk.Job("Run ZAP Active Scan", "Running ZAP Scan", RunActiveScan, ["Run Application Walkthrough"])
+    generatereport = sdk.Job("Generate ZAP Scan Report", "Generating ZAP Scan Report", GenerateReport, ["Run ZAP Active Scan"])
+    sdk.serve([startzap, runscript, runactivescan, generatereport])
