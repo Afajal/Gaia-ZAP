@@ -101,12 +101,12 @@ class OwaspZAP(object):
         self.zap.core.shutdown()
         
 
-# proxy_host = os.environ.get('ZAP_IP','localhost')
-# proxy_port = os.environ.get('ZAP_PORT',8090)
-# proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
+proxy_host = os.environ.get('ZAP_IP','localhost')
+proxy_port = os.environ.get('ZAP_PORT',8090)
+proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
 target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
-# owasp_zap = OwaspZAP(proxy_host=proxy_host, proxy_port=proxy_port)
-# context_id_list = []
+zap = ZAP(proxies={"http": "http://{0}:{1}".format(self.proxy_host, self.proxy_port), "https": "http://{0}:{1}".format(self.proxy_host, self.proxy_port)})
+context_id_list = []
 
 def StartZAP(args):
     logging.info("ZAP Initiated")
@@ -121,7 +121,7 @@ def StartZAP(args):
     regex = "{0}.*".format(target_site)
     context_id = self.zap.context.new_context(contextname="CTF2")
     time.sleep(1)
-    self.zap.context.include_in_context(contextname, regex=regex)
+    zap.context.include_in_context(contextname, regex=regex)
     time.sleep(5)
     logging.info(context_id)
     context_id_list.append(context_id)
@@ -152,7 +152,7 @@ def GenerateReport(args):
 
 def StopZAP(args):
     logging.info("ZAP tool shutting down started!")
-    owasp_zap.zap_shutdown()
+    zap.core.shutdown()
     time.sleep(5)
     logging.info("ZAP tool shutting down finished!")
     logging.info("==================================================")
