@@ -258,25 +258,28 @@ class OwaspZAP(object):
 #         except BaseException as e:
 #             logging.info(e)
         
-# proxy_host = os.environ.get('ZAP_IP','localhost')
-# proxy_port = os.environ.get('ZAP_PORT',8090)
-# proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
-# target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
-# context_id_list = []
+proxy_host = os.environ.get('ZAP_IP','localhost')
+proxy_port = os.environ.get('ZAP_PORT',8090)
+proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
+target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
+context_id_list = []
 owasp_zap = OwaspZAP(proxy_host=proxy_host, proxy_port=proxy_port)
 
 def StartZAP(args):
     logging.info("ZAP tool initialization started!")
-    owasp_zap.zap_open_url(url=target_site)
-    context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
-    context_id_list.append(context_id)
     
-    cmd = "/app/ZAP_2.7.0/zap.sh -daemon -host localhost -port 8080 -config api.disablekey=true -config 'api.addrs.addr.name=.*' -config api.addrs.addr.regex=true"
+    
+    cmd = "/app/ZAP_2.7.0/zap.sh -daemon -host localhost -port 8090 -config api.disablekey=true -config 'api.addrs.addr.name=.*' -config api.addrs.addr.regex=true"
     process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
     stdout, stderr = process.communicate()
     logging.info(stdout)
     logging.info(stderr)
     time.sleep(20)
+    
+    owasp_zap.zap_open_url(url=target_site)
+    context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
+    context_id_list.append(context_id)
+    logging.info("CTF2 Context set successfully")
     
     logging.info("ZAP tool initialization finished!")
     logging.info("==================================================")
