@@ -29,53 +29,53 @@ zap = ZAP(proxies={
 context_id_list = []
 
 def StartZAP(args):
-    logging.info("ZAP Initiated")
-    time.sleep(5)
-    cmd = "/app/ZAP_2.7.0/zap.sh -daemon -host localhost -port 8090 -config api.disablekey=true -config 'api.addrs.addr.name=.*' -config api.addrs.addr.regex=true"
-    process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
-    stdout, stderr = process.communicate()
-    logging.info(stdout)
-    logging.info(stderr)
-    time.sleep(20)
-    
-    regex = "{0}.*".format(target_site)
-    context_id = self.zap.context.new_context(contextname="CTF2")
-    time.sleep(1)
-    zap.context.include_in_context(contextname, regex=regex)
-    time.sleep(5)
-    logging.info(context_id)
-    context_id_list.append(context_id)
-    logging.info(context_id_list)
-    logging.info("CTF2 Context set successfully")
-    
-    logging.info("ZAP Started")
-    logging.info("==================================================")
+            logging.info("ZAP Initiated")
+            time.sleep(5)
+            cmd = "/app/ZAP_2.7.0/zap.sh -daemon -host localhost -port 8090 -config api.disablekey=true -config 'api.addrs.addr.name=.*' -config api.addrs.addr.regex=true"
+            process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
+            stdout, stderr = process.communicate()
+            logging.info(stdout)
+            logging.info(stderr)
+            time.sleep(20)
+            logging.info("ZAP Started")
+            
+            regex = "{0}.*".format(target_site)
+            context_id = self.zap.context.new_context(contextname="CTF2")
+            time.sleep(1)
+            logging.info("Context Started")
+            zap.context.include_in_context(contextname, regex=regex)
+            time.sleep(5)
+            logging.info(context_id)
+            context_id_list.append(context_id)
+            logging.info(context_id_list)
+            logging.info("CTF2 Context set successfully")
+            logging.info("==================================================")
     
 def RunScript(args):
-    logging.info("Started Application Walkthrough")
-    time.sleep(5)
-    
-    logging.info("Application Walkthrough Finished!")
-    logging.info("==================================================")
+            logging.info("Started Application Walkthrough")
+            time.sleep(5)
+            
+            logging.info("Application Walkthrough Finished!")
+            logging.info("==================================================")
 
 def RunActiveScan(args):
-    logging.info("ZAP Active Scan Started!")
-    time.sleep(5)
-    
-    logging.info("ZAP Active Scan Finished!")
-    logging.info("==================================================")
+            logging.info("ZAP Active Scan Started!")
+            time.sleep(5)
+            
+            logging.info("ZAP Active Scan Finished!")\
+            logging.info("==================================================")
     
 def GenerateReport(args):
-    logging.info("ZAP Scan Report")
-    time.sleep(5)
-    logging.info("==================================================")
+            logging.info("ZAP Scan Report")
+            time.sleep(5)
+            logging.info("==================================================")
 
 def StopZAP(args):
-    logging.info("ZAP tool shutting down started!")
-    zap.core.shutdown()
-    time.sleep(5)
-    logging.info("ZAP tool shutting down finished!")
-    logging.info("==================================================")
+            logging.info("ZAP tool shutting down started!")
+            zap.core.shutdown()
+            time.sleep(5)
+            logging.info("ZAP tool shutting down finished!")
+            logging.info("==================================================")
     
 def main():
     logging.basicConfig(level=logging.INFO)
