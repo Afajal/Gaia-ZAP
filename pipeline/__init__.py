@@ -101,12 +101,12 @@ class OwaspZAP(object):
         self.zap.core.shutdown()
         
 
-proxy_host = os.environ.get('ZAP_IP','localhost')
-proxy_port = os.environ.get('ZAP_PORT',8090)
-proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
-target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
-owasp_zap = OwaspZAP(proxy_host=proxy_host, proxy_port=proxy_port)
-context_id_list = []
+# proxy_host = os.environ.get('ZAP_IP','localhost')
+# proxy_port = os.environ.get('ZAP_PORT',8090)
+# proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
+# target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
+# owasp_zap = OwaspZAP(proxy_host=proxy_host, proxy_port=proxy_port)
+# context_id_list = []
 
 def StartZAP(args):
     logging.info("ZAP Initiated")
