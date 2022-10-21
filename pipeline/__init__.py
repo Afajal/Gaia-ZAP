@@ -40,7 +40,7 @@ def StartZAP(args):
             logging.info("ZAP Started")
             
             regex = "{0}.*".format(target_site)
-            context_id = self.zap.context.new_context(contextname="CTF2")
+            context_id = zap.context.new_context(contextname="CTF2")
             time.sleep(1)
             logging.info("Context Started")
             zap.context.include_in_context(contextname, regex=regex)
