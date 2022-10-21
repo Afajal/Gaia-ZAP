@@ -106,8 +106,8 @@ proxy_port = os.environ.get('ZAP_PORT',8090)
 proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
 target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
 zap = ZAP(proxies={
-            "http": "http://{0}:{1}".format(self.proxy_host, self.proxy_port), 
-            "https": "http://{0}:{1}".format(self.proxy_host, self.proxy_port)}
+            "http": "http://{0}:{1}".format(proxy_host, proxy_port), 
+            "https": "http://{0}:{1}".format(proxy_host, proxy_port)}
             )
 context_id_list = []
 
