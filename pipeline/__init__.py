@@ -62,7 +62,7 @@ def RunActiveScan(args):
             logging.info("ZAP Active Scan Started!")
             time.sleep(5)
             
-            logging.info("ZAP Active Scan Finished!")\
+            logging.info("ZAP Active Scan Finished!")
             logging.info("==================================================")
     
 def GenerateReport(args):
