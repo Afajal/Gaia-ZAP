@@ -104,7 +104,7 @@ class OwaspZAP(object):
 # proxy_host = os.environ.get('ZAP_IP','localhost')
 # proxy_port = os.environ.get('ZAP_PORT',8090)
 # proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
-# target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
+target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
 # owasp_zap = OwaspZAP(proxy_host=proxy_host, proxy_port=proxy_port)
 # context_id_list = []
 
@@ -118,17 +118,15 @@ def StartZAP(args):
     logging.info(stderr)
     time.sleep(20)
     
-#     regex = "{0}.*".format(url)
-#     context_id = self.zap.context.new_context(contextname=contextname)
-#     time.sleep(1)
-#     self.zap.context.include_in_context(contextname, regex=regex)
-#     time.sleep(5)
-    
-#     owasp_zap.zap_open_url(url=target_site)
-#     context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
-#     context_id_list.append(context_id)
-#     logging.info(context_id_list)
-#     logging.info("CTF2 Context set successfully")
+    regex = "{0}.*".format(target_site)
+    context_id = self.zap.context.new_context(contextname="CTF2")
+    time.sleep(1)
+    self.zap.context.include_in_context(contextname, regex=regex)
+    time.sleep(5)
+    logging.info(context_id)
+    context_id_list.append(context_id)
+    logging.info(context_id_list)
+    logging.info("CTF2 Context set successfully")
     
     logging.info("ZAP Started")
     logging.info("==================================================")
