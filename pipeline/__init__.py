@@ -269,16 +269,16 @@ def StartZAP(args):
     logging.info("ZAP tool initialization started!")
     
     
-    cmd = "/app/ZAP_2.7.0/zap.sh -daemon -host localhost -port 8090 -config api.disablekey=true -config 'api.addrs.addr.name=.*' -config api.addrs.addr.regex=true"
-    process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
-    stdout, stderr = process.communicate()
-    logging.info(stdout)
-    logging.info(stderr)
-    time.sleep(20)
+    #cmd = "/app/ZAP_2.7.0/zap.sh -daemon -host localhost -port 8090 -config api.disablekey=true -config 'api.addrs.addr.name=.*' -config api.addrs.addr.regex=true"
+    #process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
+    #stdout, stderr = process.communicate()
+    #logging.info(stdout)
+    #logging.info(stderr)
+    #time.sleep(20)
     
-    owasp_zap.zap_open_url(url=target_site)
-    context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
-    context_id_list.append(context_id)
+    #owasp_zap.zap_open_url(url=target_site)
+    #context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
+    #context_id_list.append(context_id)
     logging.info("CTF2 Context set successfully")
     
     logging.info("ZAP tool initialization finished!")
@@ -286,25 +286,25 @@ def StartZAP(args):
     
 def RunWalkthrough(args):
     logging.info("Walkthrough of Application has been started!")
-    CTF2_walkthrough(proxy_host=proxy_host, proxy_port=proxy_port, target=target_site).run_script()
-    time.sleep(5)
-    logging.info("Walkthrough of Application has been finished!")
+    #CTF2_walkthrough(proxy_host=proxy_host, proxy_port=proxy_port, target=target_site).run_script()
+    #time.sleep(5)
+    #logging.info("Walkthrough of Application has been finished!")
     logging.info("==================================================")
  
 def RunSpiderScan(args):
     logging.info("ZAP Spider Scan has been started!")
-    spider_id = owasp_zap.zap_start_spider(contextname='CTF2', url=target_site)
-    owasp_zap.zap_spider_status(spider_id=spider_id)
-    time.sleep(5)
-    logging.info("ZAP Spider Scan has been finished!")
+    #spider_id = owasp_zap.zap_start_spider(contextname='CTF2', url=target_site)
+    #owasp_zap.zap_spider_status(spider_id=spider_id)
+    #time.sleep(5)
+    #logging.info("ZAP Spider Scan has been finished!")
     logging.info("==================================================")
 
 def RunActiveScan(args):
     logging.info("ZAP Scan has been started!")
-    logging.info(context_id_list[0])
-    scan_id = owasp_zap.zap_start_ascan(context=context_id_list[0], url=target_site)
-    owasp_zap.zap_scan_status(scan_id=scan_id)
-    time.sleep(5)
+    #logging.info(context_id_list[0])
+    #scan_id = owasp_zap.zap_start_ascan(context=context_id_list[0], url=target_site)
+    #owasp_zap.zap_scan_status(scan_id=scan_id)
+    #time.sleep(5)
     logging.info("ZAP Scan has been finished!")
     logging.info("==================================================")
     
