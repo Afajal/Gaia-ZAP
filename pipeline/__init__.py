@@ -4,11 +4,7 @@ import time
 import subprocess
 import os
 import git
-
-path_parent = os.getcwd()
-
-nodejs_path = path_parent+"/Cut-The-Funds-NodeJS"
-npm_audit_path = path_parent+"/Cut-The-Funds-NodeJS"
+from OwaspZAP import *
 
 def StartZAP(args):
     logging.info("ZAP Initiated")
