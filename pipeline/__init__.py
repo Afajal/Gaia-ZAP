@@ -4,7 +4,19 @@ import time
 import subprocess
 import os
 import git
-from OwaspZAP import *
+from zapv2 import ZAPv2 as ZAP
+import base64
+import uuid
+import json
+import requests
+from datetime import datetime
+from selenium import webdriver
+from selenium.webdriver.common.proxy import *
+import sys
+from selenium.webdriver.common.keys import Keys
+import time
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 def StartZAP(args):
     logging.info("ZAP Initiated")
