@@ -118,11 +118,17 @@ def StartZAP(args):
     logging.info(stderr)
     time.sleep(20)
     
-    owasp_zap.zap_open_url(url=target_site)
-    context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
-    context_id_list.append(context_id)
-    logging.info(context_id_list)
-    logging.info("CTF2 Context set successfully")
+#     regex = "{0}.*".format(url)
+#     context_id = self.zap.context.new_context(contextname=contextname)
+#     time.sleep(1)
+#     self.zap.context.include_in_context(contextname, regex=regex)
+#     time.sleep(5)
+    
+#     owasp_zap.zap_open_url(url=target_site)
+#     context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
+#     context_id_list.append(context_id)
+#     logging.info(context_id_list)
+#     logging.info("CTF2 Context set successfully")
     
     logging.info("ZAP Started")
     logging.info("==================================================")
