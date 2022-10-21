@@ -101,6 +101,11 @@ class OwaspZAP(object):
         self.zap.core.shutdown()
         
 owasp_zap = OwaspZAP(proxy_host=proxy_host, proxy_port=proxy_port)
+proxy_host = os.environ.get('ZAP_IP','localhost')
+proxy_port = os.environ.get('ZAP_PORT',8090)
+proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
+target_site = os.environ.get('TARGET_URL','http://134.209.146.136')
+context_id_list = []
 
 def StartZAP(args):
     logging.info("ZAP Initiated")
@@ -115,6 +120,7 @@ def StartZAP(args):
     owasp_zap.zap_open_url(url=target_site)
     context_id = owasp_zap.zap_define_context(contextname='CTF2', url=target_site)
     context_id_list.append(context_id)
+    logging.info(context_id_list)
     logging.info("CTF2 Context set successfully")
     
     logging.info("ZAP Started")
