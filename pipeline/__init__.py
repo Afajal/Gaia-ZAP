@@ -94,7 +94,8 @@ target_site = "http://134.209.146.136"
 def StartZAP(args):
     logging.info("ZAP Initiated")
     time.sleep(5)
-    logging.info('Target URL', target_site)
+    logging.info("TARGET SITE")
+    logging.info(target_site)
     zap = ZAP(proxies = {'http': proxy_url, 'https': proxy_url})
     policies = zap.ascan.scan_policy_names
     if 'Light' not in policies:
