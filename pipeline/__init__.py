@@ -101,9 +101,7 @@ def StartZAP(args):
         light = zap.ascan.add_scan_policy('Light', alertthreshold='Low', attackstrength='Low')
         logging.info("[+] ================ Add Policy =================")
         logging.info('[+] Added Scan Policy')
-    WeCareAuthScript(proxy_host=proxy_host, proxy_port=proxy_port, target=target_site).run_script()
-    active_scan_id = zap.ascan.scan(target_site,scanpolicyname='Light')
-
+        
     logging.info("==================================================")
     
 def RunScript(args):
@@ -117,7 +115,8 @@ def RunScript(args):
 def RunActiveScan(args):
     logging.info("ZAP Active Scan Started!")
     time.sleep(5)
-
+    
+    zap = ZAP(proxies = {'http': proxy_url, 'https': proxy_url})
     active_scan_id = zap.ascan.scan(target_site,scanpolicyname='Light')
 
     logging.info("ZAP Active Scan Finished!")
@@ -126,6 +125,7 @@ def RunActiveScan(args):
 def GenerateReport(args):
     logging.info("ZAP Scan Report")
     logging.info("[+] ================ Scan Completed =================")
+    zap = ZAP(proxies = {'http': proxy_url, 'https': proxy_url})
     alerts = zap.core.alerts()
     logging.info('_'*125)
     logging.info('|'+' '*48+'Name'+' '*47+'  |'+'  Severity  '+'|'+'  CWE  |')
@@ -144,6 +144,7 @@ def GenerateReport(args):
 def StopZAP(args):
     logging.info("ZAP tool shutting down started!")
     time.sleep(5)
+    zap = ZAP(proxies = {'http': proxy_url, 'https': proxy_url})
     zap.core.shutdown()
     logging.info("ZAP tool shutting down finished!")
     logging.info("==================================================")
