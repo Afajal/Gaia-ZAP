@@ -43,7 +43,6 @@ def GenerateReport(args):
 
 def StopZAP(args):
             logging.info("ZAP tool shutting down started!")
-            zap.core.shutdown()
             time.sleep(5)
             logging.info("ZAP tool shutting down finished!")
             logging.info("==================================================")
