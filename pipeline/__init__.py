@@ -85,10 +85,8 @@ class WeCareAuthScript(object):
         driver.get('%s/plans/' % url)
         time.sleep(10)
 
-#proxy_host = os.environ.get('ZAP_IP','localhost')
-proxy_host = "35.219.178.50"
-#proxy_port = os.environ.get('ZAP_PORT',8090)
-proxy_port = 8090
+proxy_host = os.environ.get('ZAP_IP','localhost')
+proxy_port = os.environ.get('ZAP_PORT',8090)
 proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
 #target_site = "http://{0}:9000".format(os.environ.get('TARGET_IP', 'localhost'))
 target_site = "http://134.209.146.136"
