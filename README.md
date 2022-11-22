@@ -1,7 +1,5 @@
 # Gaia ZAP Pipeline
 
-# Gaia
-
 ## Build Dockerfile
 
 ```bash
