@@ -85,8 +85,10 @@ class WeCareAuthScript(object):
         driver.get('%s/plans/' % url)
         time.sleep(10)
 
-proxy_host = os.environ.get('ZAP_IP','localhost')
-proxy_port = os.environ.get('ZAP_PORT',8090)
+#proxy_host = os.environ.get('ZAP_IP','localhost')
+proxy_host = "35.219.178.50"
+#proxy_port = os.environ.get('ZAP_PORT',8090)
+proxy_port = 8090
 proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
 #target_site = "http://{0}:9000".format(os.environ.get('TARGET_IP', 'localhost'))
 target_site = "http://134.209.146.136"
@@ -94,13 +96,6 @@ target_site = "http://134.209.146.136"
 def StartZAP(args):
     logging.info("ZAP Initiated")
     time.sleep(5)
-    
-    cmd = "/app/ZAP_2.7.0/zap.sh -daemon -host localhost -port 8090 -config api.disablekey=true -config 'api.addrs.addr.name=.*' -config api.addrs.addr.regex=true"
-    process = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE,universal_newlines=True)
-    stdout, stderr = process.communicate()
-    logging.info(stdout)
-    logging.info(stderr)
-
     logging.info('Target URL', target_site)
     zap = ZAP(proxies = {'http': proxy_url, 'https': proxy_url})
     policies = zap.ascan.scan_policy_names
