@@ -17,7 +17,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class WeCareAuthScript(object):
-    def __init__(self, proxy_host = 'localhost', proxy_port = '8090', target = 'http://134.209.146.136'):
+    def __init__(self, proxy_host = 'localhost', proxy_port = '8090', target = 'http://localhost:9000'):
         self.proxy_host = proxy_host
         self.proxy_port = proxy_port
         self.target = target
@@ -88,8 +88,7 @@ class WeCareAuthScript(object):
 proxy_host = os.environ.get('ZAP_IP','localhost')
 proxy_port = os.environ.get('ZAP_PORT',8090)
 proxy_url = "http://{0}:{1}".format(proxy_host,proxy_port)
-#target_site = "http://{0}:9000".format(os.environ.get('TARGET_IP', 'localhost'))
-target_site = "http://134.209.146.136"
+target_site = "http://{0}:9000".format(os.environ.get('TARGET_IP', 'localhost'))
 
 def StartZAP(args):
     logging.info("ZAP Initiated")
